@@ -5,9 +5,10 @@ Menu::Menu() {
 }
 
 void Menu::MainMenu() {
-    ALLEGRO_DISPLAY* ventana = al_create_display(800, 600);
+    ALLEGRO_DISPLAY* ventanaPrincipal = al_create_display(800, 600);
     ALLEGRO_FONT* arial = al_load_font("arial.ttf", 70, 0);
-    al_set_window_title(ventana, "Memory EX");
+
+    al_set_window_title(ventanaPrincipal, "Memory EX");
 
     ALLEGRO_BITMAP* mainMenu = al_load_bitmap("data/img/MainMenu.png");
     ALLEGRO_BITMAP* playHover = al_load_bitmap("data/img/BotonesMenu/Hover/5Play.png");
@@ -20,17 +21,23 @@ void Menu::MainMenu() {
 
     al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
     al_register_event_source(event_queue, al_get_mouse_event_source());
+    al_register_event_source(event_queue, al_get_display_event_source(ventanaPrincipal));
 
     al_start_timer(segundoTimer);
     int segundo = 0;
     int x = -1, y = -1;
     int botonesMenu[] = { 0, 0, 0, 0 };
 
-    while (true) {
+    bool running = true;
+    while (running) {
         ALLEGRO_EVENT Evento;
         al_wait_for_event(event_queue, &Evento);
         //al_clear_to_color(blanco);
         al_draw_bitmap(mainMenu, 0, 0, 0);
+
+        if (Evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+            running = false;
+        }
 
         if (Evento.type == ALLEGRO_EVENT_TIMER) {
             if (Evento.timer.source == segundoTimer)
@@ -49,7 +56,12 @@ void Menu::MainMenu() {
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (Evento.mouse.button & 1) {
                 if (botonesMenu[0] == 1) cout << "Diste click en Play" << endl;
-                if (botonesMenu[1] == 1) cout << "Diste click en Creditos" << endl;
+                if (botonesMenu[1] == 1) {
+                    cout << "Diste click en Creditos" << endl;
+                    al_destroy_display(ventanaPrincipal);
+                    Credits();
+                    return;
+                }
                 if (botonesMenu[2] == 1) cout << "Diste click en Settings" << endl;
                 if (botonesMenu[3] == 1) cout << "Diste click en Exit" << endl;
             }
@@ -66,5 +78,6 @@ void Menu::MainMenu() {
         }
         al_flip_display();
     }
+    al_destroy_display(ventanaPrincipal);
     return;
 }
