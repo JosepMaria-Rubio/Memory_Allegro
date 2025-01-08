@@ -3,7 +3,6 @@
 #include<Windows.h>
 #include <string>
 
-#include"Credits.h"
 
 #include<allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
@@ -15,10 +14,20 @@ using namespace std;
 
 class Menu {
 private:
+	ALLEGRO_TIMER* timer;
 
 public:
 	Menu();
 
-	void MainMenu();
+	int MainMenu(ALLEGRO_DISPLAY* ventana);
+	void SettingsMenu(ALLEGRO_DISPLAY* ventana);
+	void CreditsMenu(ALLEGRO_DISPLAY* ventana);
+
 };
 
+enum MenuOptions {
+	PLAY,
+	CREDITS,
+	SETTINGS,
+	EXIT
+};
