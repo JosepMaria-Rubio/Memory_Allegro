@@ -5,7 +5,7 @@ Menu::Menu() {
 }
 
 int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
-
+    al_resize_display(ventanaPrincipal, 800, 600);
     al_set_window_title(ventanaPrincipal, "Memory EX");
 
     ALLEGRO_BITMAP* mainMenu = al_load_bitmap("data/img/MainMenu.png");
@@ -14,14 +14,11 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
     ALLEGRO_BITMAP* settingsHover = al_load_bitmap("data/img/BotonesMenu/Hover/7Settings.png");
     ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
 
-    ALLEGRO_TIMER* segundoTimer = al_create_timer(1.0);
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 
-    al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_display_event_source(ventanaPrincipal));
 
-    al_start_timer(segundoTimer);
     int segundo = 0;
     int x = -1, y = -1;
     int botonesMenu[] = { 0, 0, 0, 0 };
@@ -37,10 +34,6 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
             running = false;
         }
 
-        if (Evento.type == ALLEGRO_EVENT_TIMER) {
-            if (Evento.timer.source == segundoTimer)
-                segundo++;
-        }
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             x = Evento.mouse.x;
             y = Evento.mouse.y;
@@ -80,7 +73,6 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
     al_destroy_bitmap(creditsHover);
 	al_destroy_bitmap(settingsHover);
 	al_destroy_bitmap(exitHover);
-	al_destroy_timer(segundoTimer);
     al_destroy_event_queue(event_queue);
     return 3;
 }
@@ -92,16 +84,13 @@ void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
     ALLEGRO_BITMAP* exitNormal = al_load_bitmap("data/img/BotonesMenu/Normal/4Exit.png");
     ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
     
-    ALLEGRO_FONT* arial70 = al_load_font("arial.ttf", 70, 0);
-    ALLEGRO_FONT* arial35 = al_load_font("arial.ttf", 35, 0);
+    ALLEGRO_FONT* arial70 = al_load_font("data/fonts/arial.ttf", 70, 0);
+    ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
 
-    timer = al_create_timer(1.0);
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-
-    al_register_event_source(event_queue, al_get_timer_event_source(timer));
+    
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
-    al_start_timer(timer);
     int sec = 0;
     int x = -1, y = -1;
     int botonExit = 0;
@@ -116,10 +105,6 @@ void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
         al_draw_text(arial35, al_map_rgb(0, 0, 0), 400, 400, ALLEGRO_ALIGN_CENTER, "Ning ye Bao");
         al_draw_bitmap(exitNormal, 300, 500, 0);
 
-        if (Evento.type == ALLEGRO_EVENT_TIMER) {
-            if (Evento.timer.source == timer)
-                sec++;
-        }
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             x = Evento.mouse.x;
             y = Evento.mouse.y;
@@ -153,16 +138,13 @@ void Menu::SettingsMenu(ALLEGRO_DISPLAY* ventana) {
     ALLEGRO_BITMAP* exitNormal = al_load_bitmap("data/img/BotonesMenu/Normal/4Exit.png");
     ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
 
-    ALLEGRO_FONT* arial70 = al_load_font("arial.ttf", 70, 0);
-    ALLEGRO_FONT* arial35 = al_load_font("arial.ttf", 35, 0);
+    ALLEGRO_FONT* arial70 = al_load_font("data/fonts/arial.ttf", 70, 0);
+    ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
 
-    timer = al_create_timer(1.0);
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-
-    al_register_event_source(event_queue, al_get_timer_event_source(timer));
+    
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
-    al_start_timer(timer);
     int sec = 0;
     int x = -1, y = -1;
     int botonExit = 0;
@@ -176,10 +158,6 @@ void Menu::SettingsMenu(ALLEGRO_DISPLAY* ventana) {
         al_draw_text(arial35, al_map_rgb(0, 0, 0), 400, 300, ALLEGRO_ALIGN_CENTER, "Players  < 2 > ");
         al_draw_bitmap(exitNormal, 300, 500, 0);
 
-        if (Evento.type == ALLEGRO_EVENT_TIMER) {
-            if (Evento.timer.source == timer)
-                sec++;
-        }
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             x = Evento.mouse.x;
             y = Evento.mouse.y;

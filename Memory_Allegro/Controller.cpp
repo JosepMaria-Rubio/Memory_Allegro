@@ -2,6 +2,7 @@
 
 
 Controller::Controller() {
+    srand(time(NULL));
     al_init();
     al_init_font_addon();
     al_init_ttf_addon();
@@ -10,7 +11,6 @@ Controller::Controller() {
     al_install_mouse();
 
     ventana = al_create_display(800, 600);
-    al_set_window_title(ventana, "Memory EX");
     bool running = true;
     while (running) {
         switch ((MenuOptions)m.MainMenu(ventana)) {

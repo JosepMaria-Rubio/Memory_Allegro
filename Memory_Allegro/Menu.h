@@ -14,7 +14,6 @@ using namespace std;
 
 class Menu {
 private:
-	ALLEGRO_TIMER* timer;
 
 public:
 	Menu();
@@ -22,7 +21,6 @@ public:
 	int MainMenu(ALLEGRO_DISPLAY* ventana);
 	void SettingsMenu(ALLEGRO_DISPLAY* ventana);
 	void CreditsMenu(ALLEGRO_DISPLAY* ventana);
-
 };
 
 enum MenuOptions {
