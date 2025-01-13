@@ -7,6 +7,7 @@ class Card {
 		std::string imgFrontPath;
 		std::string imgBackPath;
 		std::string cardName;
+		ALLEGRO_BITMAP* currentImg;
 		bool isFlipped;
 		bool isFound;
 		int positionTop[2];
@@ -20,6 +21,7 @@ class Card {
 		void setPosition(int* positionTop, int* positionBottom);
 		std::string getImgFrontPath();
 		std::string getImgBackPath();
+		ALLEGRO_BITMAP* getcurrentImg();
 		int* getPositionTop();
 		int* getPositionBottom();
 };

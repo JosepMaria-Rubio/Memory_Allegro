@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <chrono>
 #include <iostream>
 #include <string>
 #include <allegro5/allegro_image.h>
@@ -19,7 +20,7 @@ class Game {
 		std::vector<Card> cards;
 		int numPairs;
 		int turns;
-		ALLEGRO_TIMER* timer;
+		//ALLEGRO_TIMER* timer;
 	public:
 		Game();
 		void InitializeGame();
@@ -27,6 +28,5 @@ class Game {
 		void LoadCards();
 		void DrawCards();
 		void SetCardNames();
-		void SetCardPath();
 };
 
