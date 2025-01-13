@@ -6,6 +6,8 @@ Card::Card(std::string imgFrontPath, std::string cardName) {
 	this->cardName = cardName;
 	isFlipped = false;
 	isFound = false;
+
+
 }
 
 void Card::Flip() {

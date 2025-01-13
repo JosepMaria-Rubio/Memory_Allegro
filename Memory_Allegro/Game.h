@@ -3,12 +3,15 @@
 #include <algorithm>
 #include <random>
 #include <iostream>
+#include <string>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 #include "Card.h"
+
+using namespace std;
 
 class Game {
 	private:
