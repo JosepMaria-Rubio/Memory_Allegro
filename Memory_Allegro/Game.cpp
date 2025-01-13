@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include <windows.h>
 Game::Game() {
 	cards = std::vector<Card>();
 	cardNames = std::vector<std::string>();
@@ -28,6 +28,9 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
 
     ALLEGRO_FONT* arial70 = al_load_font("data/fonts/arial.ttf", 70, 0);
     ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
+
+    std::vector<Card*> flippedCards = std::vector<Card*>();
+
 	LoadCards();
     
     al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
@@ -85,10 +88,25 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
                 if (x >= cards[i].getPositionTop()[0] && x <= cards[i].getPositionBottom()[0] && y >= cards[i].getPositionTop()[1] && y <= cards[i].getPositionBottom()[1]) {
                     if (Evento.mouse.button & 1) {
                         cards[i].Flip();
+                        flippedCards.push_back(&cards[i]);
+                        //std::cout << flippedCards[flippedCards.size() - 1].getName() << flippedCards.size() << std::endl;
                     }
                 }
             }
         }
+
+        if (flippedCards.size() >= 2) {
+            if (flippedCards[0]->getName() != flippedCards[1]->getName()) {
+                
+                flippedCards[0]->Flip();
+                flippedCards[1]->Flip();
+            }
+            flippedCards.erase(flippedCards.begin());
+            flippedCards.erase(flippedCards.begin());
+        }
+
+
+
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (Evento.mouse.button & 1) {

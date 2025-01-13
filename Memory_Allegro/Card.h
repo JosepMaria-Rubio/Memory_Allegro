@@ -21,7 +21,9 @@ class Card {
 		void setPosition(int* positionTop, int* positionBottom);
 		std::string getImgFrontPath();
 		std::string getImgBackPath();
+		std::string getName();
 		ALLEGRO_BITMAP* getcurrentImg();
+		bool checkName(std::string nameOther);
 		int* getPositionTop();
 		int* getPositionBottom();
 };

@@ -52,8 +52,18 @@ std::string Card::getImgBackPath() {
 	return imgBackPath;
 }
 
+std::string Card::getName()
+{
+	return cardName;
+}
+
 ALLEGRO_BITMAP* Card::getcurrentImg() {
 	return currentImg;
+}
+
+bool Card::checkName(std::string nameOther)
+{
+	return cardName == nameOther;
 }
 
 int* Card::getPositionTop() {
