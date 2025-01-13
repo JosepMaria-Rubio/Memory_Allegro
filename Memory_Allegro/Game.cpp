@@ -21,24 +21,23 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
 
     ALLEGRO_BITMAP* surrenderHover = al_load_bitmap("data/img/BotonesGame/hoverGame/Surrender2.png");
     ALLEGRO_BITMAP* pauseHover = al_load_bitmap("data/img/BotonesGame/hoverGame/Pause2.png");
+    ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 
-    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     ALLEGRO_TIMER* segundoTimer = al_create_timer(1.0);
-    al_register_event_source(queue, al_get_timer_event_source(segundoTimer));
-    al_start_timer(segundoTimer);
+    
 
     ALLEGRO_FONT* arial70 = al_load_font("data/fonts/arial.ttf", 70, 0);
     ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
-	SetCardNames();
 	LoadCards();
     
-    ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
     int sec = 0;
     int x = -1, y = -1;
     int botonExit = 0;
     bool running = true;
+    al_start_timer(segundoTimer);
     while (running) {
         ALLEGRO_EVENT Evento;
         al_wait_for_event(event_queue, &Evento);
@@ -46,17 +45,15 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         DrawCards();
         int segundo = 0;
         int x = -1, y = -1;
-        int botonesGame[] = { 0, 0};
+        int botonesGame[] = {0, 0};
         x = Evento.mouse.x;
         y = Evento.mouse.y;
-        /*al_wait_for_event(queue, &Evento);
         if (Evento.type == ALLEGRO_EVENT_TIMER) {
             if (Evento.timer.source == segundoTimer) {
-                segundo++;
+                sec++;
             }
-        }*/
-        //al_clear_to_color(al_map_rgb(segundo * 10 % 255, segundo));
-        //al_draw_text(arial35, al_map_rgb(255, 255, 255), 200, 200, NULL, ("Segundo: "+ to_string(segundo)).c_str());
+        }
+        al_draw_text(arial35, al_map_rgb(0, 0, 0), 1080, 55, NULL, (to_string(sec)).c_str());
 
         if (Evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             running = false;
@@ -112,6 +109,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
 
 void Game::LoadCards() {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    SetCardNames();
     for (int i = 0; i < numPairs; i++) {
         cards.push_back(Card("data/img/Cartas/" + cardNames[i] + ".png", cardNames[i]));
         cards.push_back(Card("data/img/Cartas/" + cardNames[i] + ".png", cardNames[i]));
