@@ -18,6 +18,7 @@ class Game {
 	private:
 		std::vector<std::string> cardNames;
 		std::vector<Card> cards;
+		std::vector<Card*> flippedCards;
 		int numPairs;
 		int turns;
 		//ALLEGRO_TIMER* timer;
@@ -28,5 +29,7 @@ class Game {
 		void LoadCards();
 		void DrawCards();
 		void SetCardNames();
+		void checkMatch();
+		bool checkWin();
 };
 

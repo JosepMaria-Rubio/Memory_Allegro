@@ -3,6 +3,7 @@
 Game::Game() {
 	cards = std::vector<Card>();
 	cardNames = std::vector<std::string>();
+    flippedCards = std::vector<Card*>();
 	numPairs = 9;
     turns = 0;
 }
@@ -29,7 +30,6 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     ALLEGRO_FONT* arial70 = al_load_font("data/fonts/arial.ttf", 70, 0);
     ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
 
-    std::vector<Card*> flippedCards = std::vector<Card*>();
 
 	LoadCards();
     
@@ -37,6 +37,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
     int sec = 0;
+    int timReset = 0;
     int x = -1, y = -1;
     int botonExit = 0;
     bool running = true;
@@ -46,7 +47,6 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         al_wait_for_event(event_queue, &Evento);
         al_draw_bitmap(background, 0, 0, 0);
         DrawCards();
-        int segundo = 0;
         int x = -1, y = -1;
         int botonesGame[] = {0, 0};
         x = Evento.mouse.x;
@@ -54,6 +54,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         if (Evento.type == ALLEGRO_EVENT_TIMER) {
             if (Evento.timer.source == segundoTimer) {
                 sec++;
+                timReset++;
             }
         }
         al_draw_text(arial35, al_map_rgb(0, 0, 0), 1080, 55, NULL, (to_string(sec)).c_str());
@@ -81,32 +82,30 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
             }
         }
 
-		
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             //botonExit = (x >= 300 && x <= 500 && y >= 500 && y <= 550) ? 1 : 0;
             for (int i = 0; i < cards.size(); i++) {
                 if (x >= cards[i].getPositionTop()[0] && x <= cards[i].getPositionBottom()[0] && y >= cards[i].getPositionTop()[1] && y <= cards[i].getPositionBottom()[1]) {
-                    if (Evento.mouse.button & 1) {
+                    if (Evento.mouse.button & 1 && flippedCards.size() < 2) {
                         cards[i].Flip();
                         flippedCards.push_back(&cards[i]);
+						timReset = 0;
                         //std::cout << flippedCards[flippedCards.size() - 1].getName() << flippedCards.size() << std::endl;
                     }
                 }
             }
         }
 
-        if (flippedCards.size() >= 2) {
-            if (flippedCards[0]->getName() != flippedCards[1]->getName()) {
-                
-                flippedCards[0]->Flip();
-                flippedCards[1]->Flip();
-            }
-            flippedCards.erase(flippedCards.begin());
-            flippedCards.erase(flippedCards.begin());
+        if (flippedCards.size() >= 2 && timReset == 1) {
+            checkMatch();
         }
 
-
-
+		if (checkWin()) {
+			al_draw_text(arial70, al_map_rgb(0, 0, 0), 500, 400, NULL, "You Win!");
+			al_flip_display();
+			al_rest(3);
+			running = false;
+		}
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (Evento.mouse.button & 1) {
@@ -120,6 +119,9 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     al_destroy_bitmap(exitHover);
     al_destroy_font(arial70);
     al_destroy_event_queue(event_queue);
+    for (int i = 0; i < cards.size(); i++) {
+        al_destroy_bitmap(cards[i].getcurrentImg());
+    }
     return;
 }
 
@@ -160,6 +162,28 @@ void Game::SetCardNames() {
     cardNames.push_back("Pidgeot");
     cardNames.push_back("Starmie");
     cardNames.push_back("Vaporeon");
+}
+
+void Game::checkMatch() {
+    if (!flippedCards[0]->checkName(flippedCards[1]->getName())) {
+        flippedCards[0]->Flip();
+        flippedCards[1]->Flip();
+    }
+    else {
+        flippedCards[0]->setMatched();
+        flippedCards[1]->setMatched();
+    }
+    flippedCards.erase(flippedCards.begin());
+    flippedCards.erase(flippedCards.begin());
+}
+
+bool Game::checkWin() {
+    for (int i = 0; i < cards.size(); i++) {
+		if (!cards[i].IsFound()) {
+            return false;
+		}
+    }
+	return true;
 }
 
 

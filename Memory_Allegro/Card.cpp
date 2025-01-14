@@ -10,10 +10,6 @@ Card::Card(std::string imgFrontPath, std::string cardName) {
 	this->cardName = cardName;
 	isFlipped = false;
 	isFound = false;
-	for (int i = 0; i < 2; i++) {
-		positionTop[i] = 0;
-		positionBottom[i] = 0;
-	}
 }
 
 void Card::Flip() {
@@ -55,6 +51,11 @@ std::string Card::getImgBackPath() {
 std::string Card::getName()
 {
 	return cardName;
+}
+
+void Card::setMatched() {
+	isFound = true;
+
 }
 
 ALLEGRO_BITMAP* Card::getcurrentImg() {
