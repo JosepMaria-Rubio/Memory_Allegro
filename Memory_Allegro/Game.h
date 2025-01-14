@@ -5,6 +5,9 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_font.h>
@@ -21,6 +24,10 @@ class Game {
 		std::vector<Card*> flippedCards;
 		int numPairs;
 		int turns;
+		ALLEGRO_SAMPLE* wrongAnswer;
+		ALLEGRO_SAMPLE* correctAnswer;
+		ALLEGRO_SAMPLE* victoryMusic;
+
 		//ALLEGRO_TIMER* timer;
 	public:
 		Game();

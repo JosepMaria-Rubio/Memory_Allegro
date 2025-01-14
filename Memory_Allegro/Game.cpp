@@ -16,23 +16,30 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     al_set_window_position(ventana, 100, 200);
 	al_resize_display(ventana, 1200, 800);
     al_set_window_title(ventana, "Memory EX");
+    //Imagenes Game
     ALLEGRO_BITMAP* background = al_load_bitmap("data/img/Backrounds/GiratinaBackground.png");
-    ALLEGRO_BITMAP* exitNormal = al_load_bitmap("data/img/BotonesMenu/Normal/4Exit.png");
-    ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
-
     ALLEGRO_BITMAP* surrenderHover = al_load_bitmap("data/img/BotonesGame/hoverGame/Surrender2.png");
     ALLEGRO_BITMAP* pauseHover = al_load_bitmap("data/img/BotonesGame/hoverGame/Pause2.png");
-    ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-
-    ALLEGRO_TIMER* segundoTimer = al_create_timer(1.0);
-    
-
+    ALLEGRO_BITMAP* playAgain1 = al_load_bitmap("data/img/botonesGame/normalGame/playAgain1.png");
+    ALLEGRO_BITMAP* quit1 = al_load_bitmap("data/img/botonesGame/normalGame/quit1.png");
+    ALLEGRO_BITMAP* playAgain2 = al_load_bitmap("data/img/botonesGame/hoverGame/playAgain2.png");
+    ALLEGRO_BITMAP* quit2 = al_load_bitmap("data/img/botonesGame/hoverGame/quit2.png");
+    ALLEGRO_BITMAP* youWin = al_load_bitmap("data/img/youWin.png");
+    //Audios
+    al_install_audio();
+    al_init_acodec_addon();
+    al_reserve_samples(1);
+    wrongAnswer = al_load_sample("data/music/WrongAnswerSound.mp3");
+    correctAnswer = al_load_sample("data/music/CorrectAnswerSound.mp3");
+    victoryMusic = al_load_sample("data/music/VictoryMusic.mp3");
+    //Fuentes
     ALLEGRO_FONT* arial70 = al_load_font("data/fonts/arial.ttf", 70, 0);
     ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
-
+    //Tiempo
+    ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    ALLEGRO_TIMER* segundoTimer = al_create_timer(1.0);
 
 	LoadCards();
-    
     al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
@@ -41,16 +48,19 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     int x = -1, y = -1;
     int botonExit = 0;
     bool running = true;
+    int attemps = 0;
     al_start_timer(segundoTimer);
     while (running) {
         ALLEGRO_EVENT Evento;
         al_wait_for_event(event_queue, &Evento);
         al_draw_bitmap(background, 0, 0, 0);
+        al_draw_text(arial35, al_map_rgb(0, 0, 0), 70, 55, NULL, (to_string(attemps)).c_str());  // Imprimir texto
         DrawCards();
         int x = -1, y = -1;
         int botonesGame[] = {0, 0};
         x = Evento.mouse.x;
         y = Evento.mouse.y;
+
         if (Evento.type == ALLEGRO_EVENT_TIMER) {
             if (Evento.timer.source == segundoTimer) {
                 sec++;
@@ -64,7 +74,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         }
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            botonesGame[0] = (x >= 375 && x <= 575 && y >= 50 && y <= 100) ? 1 : 0; // if (x >= 300 && x <= 500 && y >= 200 && y <= 250) { botonesMenu[0] = 1; } else { botonesMenu[0] = 0; }
+            botonesGame[0] = (x >= 375 && x <= 575 && y >= 50 && y <= 100) ? 1 : 0; 
             botonesGame[1] = (x >= 625 && x <= 825 && y >= 50 && y <= 100) ? 1 : 0;
         }
 
@@ -75,15 +85,17 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
             if (Evento.mouse.button & 1) {
                 if (botonesGame[0] == 1) {
                     running = false;
+                    std::cout << "Surrender" << std::endl; //Debug
                 }
                 if (botonesGame[1] == 1) {
-                    //Pausa
+                    std::cout << "Pausa" << std::endl;
+                    al_stop_timer(segundoTimer); //Pausa el tiempo 
+                    //al_start_timer(segundoTimer); //Continuar
                 }
             }
         }
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            //botonExit = (x >= 300 && x <= 500 && y >= 500 && y <= 550) ? 1 : 0;
             for (int i = 0; i < cards.size(); i++) {
                 if (x >= cards[i].getPositionTop()[0] && x <= cards[i].getPositionBottom()[0] && y >= cards[i].getPositionTop()[1] && y <= cards[i].getPositionBottom()[1]) {
                     if (Evento.mouse.button & 1 && flippedCards.size() < 2) {
@@ -98,13 +110,17 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
 
         if (flippedCards.size() >= 2 && timReset == 1) {
             checkMatch();
+            attemps++;
         }
 
 		if (checkWin()) {
-			al_draw_text(arial70, al_map_rgb(0, 0, 0), 500, 400, NULL, "You Win!");
-			al_flip_display();
-			al_rest(3);
-			running = false;
+            al_play_sample(victoryMusic, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+            al_draw_bitmap(youWin, 350, 250, 0);
+            al_stop_timer(segundoTimer);
+            //mi intencio era poner un par de botones mas para salir o volver a jugar
+            //pero ni siquiera los botones de pausa o surrender funcionan
+            
+			//running = false;
 		}
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -115,8 +131,12 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         al_flip_display();
     }
     al_destroy_bitmap(background);
-    al_destroy_bitmap(exitNormal);
-    al_destroy_bitmap(exitHover);
+    al_destroy_bitmap(pauseHover);
+    al_destroy_bitmap(surrenderHover);
+    al_uninstall_audio();
+    //al_destroy_sample(wrongAnswer);
+    //al_destroy_sample(correctAnswer);
+    //al_destroy_sample(victoryMusic);
     al_destroy_font(arial70);
     al_destroy_event_queue(event_queue);
     for (int i = 0; i < cards.size(); i++) {
@@ -168,13 +188,18 @@ void Game::checkMatch() {
     if (!flippedCards[0]->checkName(flippedCards[1]->getName())) {
         flippedCards[0]->Flip();
         flippedCards[1]->Flip();
+        al_play_sample(wrongAnswer, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+
     }
     else {
         flippedCards[0]->setMatched();
         flippedCards[1]->setMatched();
+        al_play_sample(correctAnswer, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+
     }
     flippedCards.erase(flippedCards.begin());
     flippedCards.erase(flippedCards.begin());
+
 }
 
 bool Game::checkWin() {
