@@ -5,7 +5,6 @@ Game::Game() {
 	cardNames = std::vector<std::string>();
     flippedCards = std::vector<Card*>();
 	numPairs = 9;
-    turns = 0;
 }
 
 void Game::InitializeGame() {
@@ -39,7 +38,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     ALLEGRO_FONT* arial35 = al_load_font("data/fonts/arial.ttf", 35, 0);
     //Tiempo
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
-    ALLEGRO_TIMER* segundoTimer = al_create_timer(1.0);
+	segundoTimer = al_create_timer(1.0);
 
 	LoadCards();
     al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
@@ -48,8 +47,11 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     int x = -1, y = -1;
     int botonesGame[] = { 0, 0, 0, 0 };
     int botonExit = 0;
+    turns = 0;
     bool running = true;
     bool time = true;
+	attemps = 0;
+    sec = 0;
     al_start_timer(segundoTimer);
     while (running) {
         ALLEGRO_EVENT Evento;
@@ -148,7 +150,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
                     if (botonesGame[2] == 1) {
                         ResetGame();
                         al_start_timer(segundoTimer); // Reinicia el temporizador
-                        std::cout << "play gain" << std::endl; //Debug
+                        std::cout << "play again" << std::endl; //Debug
                     }
                     if (botonesGame[3] == 1) {
                         running = false;
@@ -190,6 +192,9 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     for (int i = 0; i < cards.size(); i++) {
         al_destroy_bitmap(cards[i].getcurrentImg());
     }
+	al_destroy_timer(segundoTimer);
+	cards.clear();
+	cardNames.clear();
     return;
 }
 
@@ -266,6 +271,7 @@ void Game::ResetGame()
     turns = 0;
     sec = 0;
     timReset = 0;
+	al_start_timer(segundoTimer); 
     attemps = 0;
     LoadCards();
 }

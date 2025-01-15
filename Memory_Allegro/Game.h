@@ -22,6 +22,7 @@ class Game {
 		std::vector<std::string> cardNames;
 		std::vector<Card> cards;
 		std::vector<Card*> flippedCards;
+		ALLEGRO_TIMER* segundoTimer;
 		int numPairs;
 		int turns;
 		int attemps = 0;
