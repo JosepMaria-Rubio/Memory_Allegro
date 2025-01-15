@@ -24,6 +24,9 @@ class Game {
 		std::vector<Card*> flippedCards;
 		int numPairs;
 		int turns;
+		int attemps = 0;
+		int sec = 0;
+		int timReset = 0;
 		ALLEGRO_SAMPLE* wrongAnswer;
 		ALLEGRO_SAMPLE* correctAnswer;
 		ALLEGRO_SAMPLE* victoryMusic;
@@ -38,5 +41,7 @@ class Game {
 		void SetCardNames();
 		void checkMatch();
 		bool checkWin();
+		void ResetGame();
+
 };
 

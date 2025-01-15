@@ -5,6 +5,8 @@ Menu::Menu() {
 }
 
 int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
+    al_set_window_position(ventanaPrincipal, 560, 240);
+
     al_resize_display(ventanaPrincipal, 800, 600);
     al_set_window_title(ventanaPrincipal, "Memory EX");
 
@@ -33,7 +35,7 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
         if (Evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             running = false;
         }
-
+        std::cout << "x: " << x << " y: " << y << std::endl;
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             x = Evento.mouse.x;
             y = Evento.mouse.y;

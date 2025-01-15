@@ -13,7 +13,7 @@ void Game::InitializeGame() {
 }
 
 void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
-    al_set_window_position(ventana, 100, 200);
+    al_set_window_position(ventana, 360, 140);
 	al_resize_display(ventana, 1200, 800);
     al_set_window_title(ventana, "Memory EX");
     //Imagenes Game
@@ -24,6 +24,8 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     ALLEGRO_BITMAP* quit1 = al_load_bitmap("data/img/botonesGame/normalGame/quit1.png");
     ALLEGRO_BITMAP* playAgain2 = al_load_bitmap("data/img/botonesGame/hoverGame/playAgain2.png");
     ALLEGRO_BITMAP* quit2 = al_load_bitmap("data/img/botonesGame/hoverGame/quit2.png");
+    ALLEGRO_BITMAP* continue1 = al_load_bitmap("data/img/botonesGame/normalGame/continue1.png");
+    ALLEGRO_BITMAP* continue2 = al_load_bitmap("data/img/botonesGame/hoverGame/continue2.png");
     ALLEGRO_BITMAP* youWin = al_load_bitmap("data/img/youWin.png");
     //Audios
     al_install_audio();
@@ -43,12 +45,11 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     al_register_event_source(event_queue, al_get_timer_event_source(segundoTimer));
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
-    int sec = 0;
-    int timReset = 0;
     int x = -1, y = -1;
+    int botonesGame[] = { 0, 0, 0, 0 };
     int botonExit = 0;
     bool running = true;
-    int attemps = 0;
+    bool time = true;
     al_start_timer(segundoTimer);
     while (running) {
         ALLEGRO_EVENT Evento;
@@ -56,11 +57,8 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         al_draw_bitmap(background, 0, 0, 0);
         al_draw_text(arial35, al_map_rgb(0, 0, 0), 70, 55, NULL, (to_string(attemps)).c_str());  // Imprimir texto
         DrawCards();
-        int x = -1, y = -1;
-        int botonesGame[] = {0, 0};
         x = Evento.mouse.x;
         y = Evento.mouse.y;
-
         if (Evento.type == ALLEGRO_EVENT_TIMER) {
             if (Evento.timer.source == segundoTimer) {
                 sec++;
@@ -72,14 +70,22 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         if (Evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             running = false;
         }
+        std::cout << "x: " << x << " y: " << y << std::endl;
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             botonesGame[0] = (x >= 375 && x <= 575 && y >= 50 && y <= 100) ? 1 : 0; 
             botonesGame[1] = (x >= 625 && x <= 825 && y >= 50 && y <= 100) ? 1 : 0;
         }
+        if(!time) al_draw_bitmap(continue1, 625, 50, 0);
 
         if (botonesGame[0]) al_draw_bitmap(surrenderHover, 375, 50, 0);
-        if (botonesGame[1]) al_draw_bitmap(pauseHover, 625, 50, 0);
+        if (botonesGame[1]) {
+                if(time) al_draw_bitmap(pauseHover, 625, 50, 0);
+                else al_draw_bitmap(continue2, 625, 50, 0);
+        }
+            
+       
+            
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (Evento.mouse.button & 1) {
@@ -88,39 +94,72 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
                     std::cout << "Surrender" << std::endl; //Debug
                 }
                 if (botonesGame[1] == 1) {
-                    std::cout << "Pausa" << std::endl;
-                    al_stop_timer(segundoTimer); //Pausa el tiempo 
-                    //al_start_timer(segundoTimer); //Continuar
-                }
-            }
-        }
-
-        if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            for (int i = 0; i < cards.size(); i++) {
-                if (x >= cards[i].getPositionTop()[0] && x <= cards[i].getPositionBottom()[0] && y >= cards[i].getPositionTop()[1] && y <= cards[i].getPositionBottom()[1]) {
-                    if (Evento.mouse.button & 1 && flippedCards.size() < 2) {
-                        cards[i].Flip();
-                        flippedCards.push_back(&cards[i]);
-						timReset = 0;
-                        //std::cout << flippedCards[flippedCards.size() - 1].getName() << flippedCards.size() << std::endl;
+                    if (time) {
+                        std::cout << "Pausa" << std::endl;
+                        al_stop_timer(segundoTimer);
+                        time = false;
+                    }
+                    else {
+                        std::cout << "Continuar" << std::endl;
+                        al_start_timer(segundoTimer);
+                        time = true;
                     }
                 }
             }
         }
 
-        if (flippedCards.size() >= 2 && timReset == 1) {
-            checkMatch();
-            attemps++;
+        if (time) {
+            if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                for (int i = 0; i < cards.size(); i++) {
+                    if (x >= cards[i].getPositionTop()[0] && x <= cards[i].getPositionBottom()[0] && y >= cards[i].getPositionTop()[1] && y <= cards[i].getPositionBottom()[1]) {
+                        if (Evento.mouse.button & 1 && flippedCards.size() < 2) {
+                            cards[i].Flip();
+                            flippedCards.push_back(&cards[i]);
+                            timReset = 0;
+                            //std::cout << flippedCards[flippedCards.size() - 1].getName() << flippedCards.size() << std::endl;
+                        }
+                    }
+                }
+            }
+            if (flippedCards.size() >= 2 && timReset == 1) {
+                checkMatch();
+            }
         }
+
+       
 
 		if (checkWin()) {
             al_play_sample(victoryMusic, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
             al_draw_bitmap(youWin, 350, 250, 0);
             al_stop_timer(segundoTimer);
-            //mi intencio era poner un par de botones mas para salir o volver a jugar
-            //pero ni siquiera los botones de pausa o surrender funcionan
-            
-			//running = false;
+
+            al_draw_bitmap(playAgain1, 500, 450, 0);
+            al_draw_bitmap(quit1, 500, 550, 0);
+
+            if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
+                botonesGame[2] = (x >= 500 && x <= 700 && y >= 450 && y <= 500) ? 1 : 0;
+                botonesGame[3] = (x >= 500 && x <= 700 && y >= 550 && y <= 600) ? 1 : 0;
+            }
+            if (botonesGame[2]) al_draw_bitmap(playAgain2, 500, 450, 0);
+            if (botonesGame[3]) al_draw_bitmap(quit2, 500, 550, 0);
+              
+            if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+                if (Evento.mouse.button & 1) {
+                    if (botonesGame[2] == 1) {
+                        ResetGame();
+                        al_start_timer(segundoTimer); // Reinicia el temporizador
+                        std::cout << "play gain" << std::endl; //Debug
+                    }
+                    if (botonesGame[3] == 1) {
+                        running = false;
+                        std::cout << "quit" << std::endl; //Debug
+                    }
+                    //mi intencio era poner un par de botones mas para salir o volver a jugar
+                    //pero ni siquiera los botones de pausa o surrender funcionan
+
+                    //running = false;
+                }
+            }
 		}
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -133,19 +172,26 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     al_destroy_bitmap(background);
     al_destroy_bitmap(pauseHover);
     al_destroy_bitmap(surrenderHover);
+    al_destroy_bitmap(playAgain1);
+    al_destroy_bitmap(playAgain2);
+    al_destroy_bitmap(quit1);
+    al_destroy_bitmap(quit2);
+    al_destroy_bitmap(continue1);
+    al_destroy_bitmap(continue2);
+    al_destroy_bitmap(youWin);
+
     al_uninstall_audio();
     //al_destroy_sample(wrongAnswer);
     //al_destroy_sample(correctAnswer);
     //al_destroy_sample(victoryMusic);
     al_destroy_font(arial70);
-    al_destroy_event_queue(event_queue);
+    al_destroy_font(arial35);
+    //al_destroy_event_queue(event_queue);
     for (int i = 0; i < cards.size(); i++) {
         al_destroy_bitmap(cards[i].getcurrentImg());
     }
     return;
 }
-
-
 
 void Game::LoadCards() {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -189,6 +235,7 @@ void Game::checkMatch() {
         flippedCards[0]->Flip();
         flippedCards[1]->Flip();
         al_play_sample(wrongAnswer, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+        attemps++;
 
     }
     else {
@@ -209,6 +256,18 @@ bool Game::checkWin() {
 		}
     }
 	return true;
+}
+
+void Game::ResetGame()
+{
+    al_stop_samples();
+    cards.clear();
+    flippedCards.clear();
+    turns = 0;
+    sec = 0;
+    timReset = 0;
+    attemps = 0;
+    LoadCards();
 }
 
 
