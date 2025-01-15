@@ -1,2 +1,6 @@
-﻿  Game.cpp
-  Memory_Allegro.vcxproj -> C:\Users\ness1\source\repos\Memory_Allegro\x64\Debug\Memory_Allegro.exe
+﻿  Controller.cpp
+  Game.cpp
+  Main.cpp
+  Menu.cpp
+  Generando código...
+  Memory_Allegro.vcxproj -> C:\RepositoriosGitHub\Memory_Allegro\x64\Debug\Memory_Allegro.exe

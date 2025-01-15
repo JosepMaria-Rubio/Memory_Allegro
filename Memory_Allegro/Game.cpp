@@ -72,7 +72,6 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
         if (Evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             running = false;
         }
-        std::cout << "x: " << x << " y: " << y << std::endl;
 
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             botonesGame[0] = (x >= 375 && x <= 575 && y >= 50 && y <= 100) ? 1 : 0; 
@@ -93,16 +92,13 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
             if (Evento.mouse.button & 1) {
                 if (botonesGame[0] == 1) {
                     running = false;
-                    std::cout << "Surrender" << std::endl; //Debug
                 }
                 if (botonesGame[1] == 1) {
                     if (time) {
-                        std::cout << "Pausa" << std::endl;
                         al_stop_timer(segundoTimer);
                         time = false;
                     }
                     else {
-                        std::cout << "Continuar" << std::endl;
                         al_start_timer(segundoTimer);
                         time = true;
                     }
@@ -128,8 +124,6 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
             }
         }
 
-       
-
 		if (checkWin()) {
             al_play_sample(victoryMusic, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
             al_draw_bitmap(youWin, 350, 250, 0);
@@ -150,16 +144,10 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
                     if (botonesGame[2] == 1) {
                         ResetGame();
                         al_start_timer(segundoTimer); // Reinicia el temporizador
-                        std::cout << "play again" << std::endl; //Debug
                     }
                     if (botonesGame[3] == 1) {
                         running = false;
-                        std::cout << "quit" << std::endl; //Debug
                     }
-                    //mi intencio era poner un par de botones mas para salir o volver a jugar
-                    //pero ni siquiera los botones de pausa o surrender funcionan
-
-                    //running = false;
                 }
             }
 		}
@@ -188,7 +176,7 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     //al_destroy_sample(victoryMusic);
     al_destroy_font(arial70);
     al_destroy_font(arial35);
-    //al_destroy_event_queue(event_queue);
+    al_destroy_event_queue(event_queue);
     for (int i = 0; i < cards.size(); i++) {
         al_destroy_bitmap(cards[i].getcurrentImg());
     }
@@ -228,11 +216,23 @@ void Game::SetCardNames() {
     cardNames.push_back("Gengar");
 	cardNames.push_back("Marowak");
 	cardNames.push_back("Mew");
+    cardNames.push_back("Vaporeon");
 	cardNames.push_back("Nidoking");
 	cardNames.push_back("Nidoqueen");
     cardNames.push_back("Pidgeot");
     cardNames.push_back("Starmie");
-    cardNames.push_back("Vaporeon");
+    cardNames.push_back("Mewtwo");
+    cardNames.push_back("Charmander");
+    cardNames.push_back("Bulbasaur");
+    cardNames.push_back("Aerodactyl");
+    cardNames.push_back("Pikachu");
+    cardNames.push_back("Blastoise");
+    cardNames.push_back("Moltres");
+    cardNames.push_back("Zapdos");
+    cardNames.push_back("Gyarados");
+    cardNames.push_back("Machamp");
+    cardNames.push_back("Celebi");
+    cardNames.push_back("Squirtel");
 }
 
 void Game::checkMatch() {

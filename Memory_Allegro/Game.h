@@ -31,8 +31,6 @@ class Game {
 		ALLEGRO_SAMPLE* wrongAnswer;
 		ALLEGRO_SAMPLE* correctAnswer;
 		ALLEGRO_SAMPLE* victoryMusic;
-
-		//ALLEGRO_TIMER* timer;
 	public:
 		Game();
 		void InitializeGame();

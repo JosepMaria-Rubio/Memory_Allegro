@@ -29,13 +29,11 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
     while (running) {
         ALLEGRO_EVENT Evento;
         al_wait_for_event(event_queue, &Evento);
-        //al_clear_to_color(blanco);
         al_draw_bitmap(mainMenu, 0, 0, 0);
 
         if (Evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             running = false;
         }
-        std::cout << "x: " << x << " y: " << y << std::endl;
         if (Evento.type == ALLEGRO_EVENT_MOUSE_AXES) {
             x = Evento.mouse.x;
             y = Evento.mouse.y;
@@ -81,7 +79,6 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
 
 void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
     al_set_window_title(ventana, "Credits");
-    //al_clear_to_color();
     ALLEGRO_BITMAP* backround = al_load_bitmap("data/img/Wallpaper_1.png");
     ALLEGRO_BITMAP* exitNormal = al_load_bitmap("data/img/BotonesMenu/Normal/4Exit.png");
     ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
@@ -135,7 +132,6 @@ void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
 
 void Menu::SettingsMenu(ALLEGRO_DISPLAY* ventana) {
     al_set_window_title(ventana, "Credits");
-    //al_clear_to_color();
     ALLEGRO_BITMAP* backround = al_load_bitmap("data/img/Wallpaper_1.png");
     ALLEGRO_BITMAP* exitNormal = al_load_bitmap("data/img/BotonesMenu/Normal/4Exit.png");
     ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
