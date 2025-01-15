@@ -1,7 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f5966396-1733-42ed-ae6f-1465d73f36b5" name="Changes" comment="" />
+    <list default="true" id="f5966396-1733-42ed-ae6f-1465d73f36b5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/Memory_Allegro.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/Card.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/Card.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/Controller.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/Controller.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/Game.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/Game.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/fonts/arial.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Backrounds/Giratina.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Backrounds/GiratinaBackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/HoverGame/Pause2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/HoverGame/Surrender2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/HoverGame/continue2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/HoverGame/playAgain2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/HoverGame/quit2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/NormalGame/Pause1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/NormalGame/Surrender1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/NormalGame/continue1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/NormalGame/playAgain1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/NormalGame/quit1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/BotonesGame/RectangleBackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Aerodactyl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Arcanine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Blastoise.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Bulbasaur.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Celebi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Charmander.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Executor.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Gengar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Gyarados.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Machamp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Marowak.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Mew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Mewtwo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Moltres.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Nidoking.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Nidoqueen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Pidgeot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Pikachu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Reverso.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Squirtel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Starmie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Vaporeon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/Cartas/Zapdos.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/img/youWin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/music/CorrectAnswerSound.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/music/VictoryMusic.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/data/music/WrongAnswerSound.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.ilk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/CL.command.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/CL.read.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/CL.write.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/Cl.items.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/link.command.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/link.read.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/link.secondary.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/Memory_Allegro.tlog/link.write.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/vc143.idb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Memory_Allegro/x64/Debug/vc143.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/x64/Debug/Memory_Allegro.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Memory_Allegro/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Memory_Allegro/Main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Memory_Allegro/Memory_Allegro.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Memory_Allegro/Memory_Allegro.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Memory_Allegro/Memory_Allegro.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/Memory_Allegro/Memory_Allegro.vcxproj.filters" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Memory_Allegro/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Memory_Allegro/Menu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Memory_Allegro/Menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/Memory_Allegro/Menu.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,21 +81,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2qaRFDmAEAJWtpGwp0Fp1P6PlmK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
