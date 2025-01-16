@@ -313,6 +313,7 @@ void Game::ResetGame()
     }
     cards.clear();
     flippedCards.clear();
+	cardNames.clear();
     turns = 0;
     sec = 0;
     timReset = 0;
