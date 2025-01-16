@@ -1,16 +1,23 @@
 #include "Game.h"
 #include <windows.h>
+// Constructor: Game
+// Description: Initializes a new instance of the Game class, setting up the necessary vectors for cards, card names, 
+//              and flipped cards, and initializing the number of pairs to 9.
+// Parameters: None
+// Returns: None
 Game::Game() {
-	cards = std::vector<Card>();
-	cardNames = std::vector<std::string>();
+    cards = std::vector<Card>();
+    cardNames = std::vector<std::string>();
     flippedCards = std::vector<Card*>();
-	numPairs = 9;
+    numPairs = 9;
 }
 
-void Game::InitializeGame() {
-
-}
-
+// Function: StartGame
+    // Description: Initializes and starts the game by setting up the display, loading resources, 
+    //              and entering the main game loop to handle events and render the game.
+    // Parameters: 
+    //   - ALLEGRO_DISPLAY* ventana: Pointer to the Allegro display object.
+    // Returns: void
 void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     al_set_window_position(ventana, 360, 140);
 	al_resize_display(ventana, 1200, 800);
@@ -46,7 +53,6 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
 
     int x = -1, y = -1;
     int botonesGame[] = { 0, 0, 0, 0 };
-    int botonExit = 0;
     turns = 0;
     bool isRunning = true;
     bool isPaused = true;
@@ -149,12 +155,6 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
                 }
             }
 		}
-
-        if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            if (Evento.mouse.button & 1) {
-                if (botonExit) isRunning = false;
-            }
-        }
         al_flip_display();
     }
     al_destroy_bitmap(background);
@@ -185,17 +185,25 @@ void Game::StartGame(ALLEGRO_DISPLAY* ventana) {
     return;
 }
 
+
+/**
+ * @brief Loads and initializes the cards for the game.
+ * 
+ * This function sets the seed for random number generation based on the current time,
+ * shuffles the card names, creates pairs of cards, shuffles the cards, and sets their positions
+ * on the game board.
+ */
 void Game::LoadCards() {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     auto rng = std::default_random_engine{ seed };
     SetCardNames();
-	std::shuffle(cardNames.begin(), cardNames.end(), rng);
+    std::shuffle(cardNames.begin(), cardNames.end(), rng);
     for (int i = 0; i < numPairs; i++) {
         cards.push_back(Card("data/img/Cartas/" + cardNames[i] + ".png", cardNames[i]));
         cards.push_back(Card("data/img/Cartas/" + cardNames[i] + ".png", cardNames[i]));
     }
-	
-	std::shuffle(cards.begin(), cards.end(), rng);
+    
+    std::shuffle(cards.begin(), cards.end(), rng);
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++) {
             cards[i * 6 + j].setPosition(new int[2] {50 + 200 * j, 200 + 200 * i}, new int[2] {150 + 200 * j, 350 + 200 * i});
@@ -204,6 +212,13 @@ void Game::LoadCards() {
 }
 
 
+
+/**
+ * @brief Draws the cards on the game board.
+ * 
+ * This function iterates through the vector of cards and draws each card's current image
+ * at its specified position on the game board using the Allegro library's drawing functions.
+ */
 void Game::DrawCards() {
 	for (int i = 0; i < cards.size(); i++) {
 		al_draw_bitmap(cards[i].getcurrentImg(), cards[i].getPositionTop()[0], cards[i].getPositionTop()[1], 0);
@@ -211,15 +226,22 @@ void Game::DrawCards() {
 }
 
 
+/**
+ * @brief Sets the names of the cards to be used in the game.
+ * 
+ * This function initializes the cardNames vector with a predefined list of card names.
+ * These names are used to load the corresponding card images and create pairs of cards
+ * for the memory game.
+ */
 void Game::SetCardNames() {
-	cardNames.push_back("Arcanine");
-	cardNames.push_back("Executor");
+    cardNames.push_back("Arcanine");
+    cardNames.push_back("Executor");
     cardNames.push_back("Gengar");
-	cardNames.push_back("Marowak");
-	cardNames.push_back("Mew");
+    cardNames.push_back("Marowak");
+    cardNames.push_back("Mew");
     cardNames.push_back("Vaporeon");
-	cardNames.push_back("Nidoking");
-	cardNames.push_back("Nidoqueen");
+    cardNames.push_back("Nidoking");
+    cardNames.push_back("Nidoqueen");
     cardNames.push_back("Pidgeot");
     cardNames.push_back("Starmie");
     cardNames.push_back("Mewtwo");
@@ -236,6 +258,13 @@ void Game::SetCardNames() {
     cardNames.push_back("Squirtel");
 }
 
+/**
+ * @brief Checks if the two flipped cards match.
+ * 
+ * This function compares the names of the two flipped cards. If they match, it sets them as matched
+ * and plays the correct answer sound. If they do not match, it flips them back and plays the wrong answer sound.
+ * The function also increments the attempt counter if the cards do not match.
+ */
 void Game::checkMatch() {
     if (!flippedCards[0]->checkName(flippedCards[1]->getName())) {
         flippedCards[0]->Flip();
@@ -252,27 +281,42 @@ void Game::checkMatch() {
     }
     flippedCards.erase(flippedCards.begin());
     flippedCards.erase(flippedCards.begin());
-
 }
 
+/**
+ * @brief Checks if the player has won the game.
+ * 
+ * This function iterates through the vector of cards and checks if all cards have been found.
+ * If all cards are found, it returns true indicating the player has won the game.
+ * Otherwise, it returns false.
+ */
 bool Game::checkWin() {
     for (int i = 0; i < cards.size(); i++) {
-		if (!cards[i].IsFound()) {
+        if (!cards[i].IsFound()) {
             return false;
-		}
+        }
     }
-	return true;
+    return true;
 }
 
+/**
+ * @brief Resets the game to its initial state.
+ * 
+ * This function stops all audio samples, destroys all card bitmaps, clears the card and flipped card vectors,
+ * resets the game variables (turns, seconds, timer reset, attempts), and reloads the cards to start a new game.
+ */
 void Game::ResetGame()
 {
     al_stop_samples();
+    for (int i = 0; i < cards.size(); i++) {
+        al_destroy_bitmap(cards[i].getcurrentImg());
+    }
     cards.clear();
     flippedCards.clear();
     turns = 0;
     sec = 0;
     timReset = 0;
-	al_start_timer(segundoTimer); 
+    al_start_timer(segundoTimer); 
     attemps = 0;
     LoadCards();
 }

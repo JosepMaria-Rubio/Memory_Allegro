@@ -12,8 +12,8 @@
 
 class Controller {
 private:
-	Menu m;
-	Game g;
+	Menu menu;
+	Game game;
 	ALLEGRO_DISPLAY* ventana;
 	ALLEGRO_FONT* font;
 public:

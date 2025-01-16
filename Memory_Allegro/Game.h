@@ -33,7 +33,6 @@ class Game {
 		ALLEGRO_SAMPLE* victoryMusic;
 	public:
 		Game();
-		void InitializeGame();
 		void StartGame(ALLEGRO_DISPLAY* ventana);
 		void LoadCards();
 		void DrawCards();
@@ -41,6 +40,5 @@ class Game {
 		void checkMatch();
 		bool checkWin();
 		void ResetGame();
-
 };
 

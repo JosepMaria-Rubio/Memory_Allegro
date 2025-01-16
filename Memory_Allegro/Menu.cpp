@@ -4,6 +4,12 @@ Menu::Menu() {
     //MainMenu();
 }
 
+// Function: MainMenu
+// Description: Displays the main menu of the game and handles user interactions.
+// Parameters: 
+//   - ALLEGRO_DISPLAY* ventanaPrincipal: Pointer to the main display window.
+// Returns: 
+//   - int: Returns 0 if "Play" is selected, 1 if "Credits" is selected, 2 if "Settings" is selected, and 3 if the window is closed or "Exit" is selected.
 int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
     al_set_window_position(ventanaPrincipal, 560, 240);
 
@@ -77,6 +83,13 @@ int Menu::MainMenu(ALLEGRO_DISPLAY* ventanaPrincipal){
     return 3;
 }
 
+
+// Function: CreditsMenu
+// Description: Displays the credits menu of the game and handles user interactions.
+// Parameters: 
+//   - ALLEGRO_DISPLAY* ventana: Pointer to the main display window.
+// Returns: 
+//   - void: This function does not return a value.
 void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
     al_set_window_title(ventana, "Credits");
     ALLEGRO_BITMAP* backround = al_load_bitmap("data/img/Wallpaper_1.png");
@@ -111,12 +124,14 @@ void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
             botonExit = (x >= 300 && x <= 500 && y >= 500 && y <= 550) ? 1 : 0;
         }
 
+        if (botonExit) al_draw_bitmap(exitHover, 300, 500, 0);
+
         if (Evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (Evento.mouse.button & 1) {
                 if (botonExit) running = false;
             }
         }
-        if (botonExit) al_draw_bitmap(exitHover, 300, 500, 0);
+       
 
         al_flip_display();
     }
@@ -129,9 +144,14 @@ void Menu::CreditsMenu(ALLEGRO_DISPLAY* ventana) {
     return;
 }
 
-
+// Function: SettingsMenu
+// Description: Displays the settings menu of the game and handles user interactions.
+// Parameters: 
+//   - ALLEGRO_DISPLAY* ventana: Pointer to the main display window.
+// Returns: 
+//   - void: This function does not return a value.
 void Menu::SettingsMenu(ALLEGRO_DISPLAY* ventana) {
-    al_set_window_title(ventana, "Credits");
+    al_set_window_title(ventana, "Settings");
     ALLEGRO_BITMAP* backround = al_load_bitmap("data/img/Wallpaper_1.png");
     ALLEGRO_BITMAP* exitNormal = al_load_bitmap("data/img/BotonesMenu/Normal/4Exit.png");
     ALLEGRO_BITMAP* exitHover = al_load_bitmap("data/img/BotonesMenu/Hover/8Exit.png");
